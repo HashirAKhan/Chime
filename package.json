@@ -13,6 +13,7 @@
 		"react-native-admob": "^2.0.0-beta.5",
 		"react-native-communications": "^2.2.1",
 		"react-native-gesture-handler": "^1.0.12",
+		"react-native-maps": "^0.23.0",
 		"react-native-sound": "^0.10.9",
 		"react-native-vector-icons": "^6.2.0",
 		"react-navigation": "^3.0.9"
@@ -27,6 +28,8 @@
 		"preset": "react-native"
 	},
 	"rnpm": {
-		"assets": ["assets/fonts/"]
+		"assets": [
+			"assets/fonts/"
+		]
 	}
 }
