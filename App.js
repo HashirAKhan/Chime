@@ -1,49 +1,88 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import AddressMap from './app/components/AddressMap';
+import SavedLocations from './app/components/SavedLocations';
+import Settings from './app/components/Settings';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Foundation from 'react-native-vector-icons/Foundation';
+import {AdMobBanner} from 'react-native-admob';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+const SavedLocationsStack = createStackNavigator(
+  {
+    SLHome: SavedLocations,
+  }
+);
+const SettingsStack = createStackNavigator(
+  {
+    SettingsHome: Settings,
+  },
+  {
+    navigationOptions: { title: '', headerTitle: 'Settings' },
+  }
+);
 
-type Props = {};
-export default class App extends Component<Props> {
+const RootTab = createAppContainer(createBottomTabNavigator(
+  {
+    //Screens
+    AddressMapScreen: {
+      screen: AddressMap,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => {
+          return <Ionicons name='ios-map' size={35} color={tintColor} />
+        },
+      },
+    },
+    SavedLocationsScreen: {
+      screen: SavedLocationsStack,
+      title: 'Donate',
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => {
+          return <Foundation name='save' size={35} color={tintColor}/>
+        }
+      },
+    },
+    SettingsScreen: {
+      screen: SettingsStack,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => {
+          return <Ionicons name='ios-settings' size={35} color={tintColor} />
+        },
+      },
+    }
+  },
+  {
+    //Landing Screen
+    initialRouteName: 'AddressMapScreen',
+    order: ['AddressMapScreen', 'SavedLocationsScreen', 'SettingsScreen'],
+    tabBarOptions: {
+      showLabel: false,
+      activeTintColor: '#941AB7',
+      inactiveTintColor: '#FFFFFF',
+
+      activeBackgroundColor: '#FFFFFF',
+      inactiveBackgroundColor: '#941AB7',
+    }
+
+  }
+));
+
+export default class App extends Component{
+  static router = RootTab.router;
+
   render() {
+    const { navigation } = this.props;
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      <View style={{flex: 1}}>
+        <RootTab/>
+        <AdMobBanner
+          adSize="fullBanner"
+          adUnitID="ca-app-pub-3940256099942544/2934735716"
+          testDevices={[AdMobBanner.simulatorId]}
+          onAdFailedToLoad={error => console.error(error)}
+        />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
