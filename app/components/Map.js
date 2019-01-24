@@ -30,7 +30,7 @@ export default class Map extends React.Component {
     }
   }
   focusCurrentLocation = () => {
-    this.map.animateToCoordinate(this.props.origin, 0);
+    this.map.animateCamera(this.props.origin, 0);
   }
   render() {
     // On iOS read docs for showUserLocation.

@@ -247,76 +247,41 @@ export default class AddressMap extends React.Component {
             <Map startAlarm={this.startAlarm} hoistFocus={this.hoistFocus} radius={this.state.radius} origin={this.state.origin} destination={this.state.destination ? {latitude: this.state.destination.lat, longitude: this.state.destination.lng} : null} />
           </View>
           <View style={{position: 'absolute', top: 0, flex: this.state.focus? 0.4 : 0.2, width: '100%', flexDirection: 'column', padding: 25}}>
-            <View style={{flex: 1, flexDirection: 'row', backgroundColor: 'rgba(0, 0, 0, 0.7)', borderRadius: 35, justifyContent: 'center', alignItems: 'center', paddingLeft: 10, paddingRight: 10}}>
+            <View style={{flex: 1, flexDirection: 'row', backgroundColor: 'white', borderRadius: 35, justifyContent: 'center', alignItems: 'center', paddingLeft: 10, paddingRight: 10}}>
               <View style={{flex: 1, width: '100%', marginLeft: '4%', justifyContent: 'center', alignItems: 'center'}}>
-                <TouchableOpacity onPress={this.state.isFavorite ? this.removeAddress : this.saveAddress} disabled={!this.state.address}>
+                <TouchableOpacity onPress={this.state.isFavorite ? this.removeAddress : this.saveAddress} disabled={!this.state.address} style={{backgroundColor: "white"}}>
                   {this.state.isFavorite ? <Ionicons name='ios-heart' size={32} color="white" /> :
-                    <Ionicons name='ios-heart-empty' size={32} color="white" />}
+                    <Ionicons name='ios-heart-empty' size={32} color="#941AB7" />}
                 </TouchableOpacity>
               </View>
               <View style={{flex: 7, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                 <TextInput
-                  style={{textAlign: 'center', width: '92%', fontSize: 24, color: 'white', fontFamily: 'Microsoft Yi Baiti'}}
+                  style={{textAlign: 'center', width: '92%', fontSize: 24, color: 'white', fontFamily: 'Microsoft Yi Baiti', backgroundColor: "white"}}
                   onChangeText={this.handleAddressChange}
                   onFocus={this.handleKeyboardShow}
                   // value={this.state.address}
                   onSubmitEditing={this.state.alarm ? null : this.handleAddressSubmit}
-                  placeholderTextColor="#fff"
+                  placeholderTextColor="#333"
+                  placeholder="Where to?"
                 />
               </View>
               <View style={{flex: 1, width: '100%', marginRight: '4%', justifyContent: 'center', alignItems: 'center'}}>
-                <TouchableOpacity onPress={this.state.alarm ? this.stopAlarm : this.handleAddressSubmit} disabled={!this.state.address}>
-                  <Ionicons name='ios-search' size={32} color="white" />
+                <TouchableOpacity style={{backgroundColor: "white"}} onPress={this.state.alarm ? this.stopAlarm : this.handleAddressSubmit} disabled={!this.state.address}>
+                  <Ionicons name='ios-search' size={32} color="#941AB7" />
                 </TouchableOpacity>
               </View>
             </View>
-            {/* <View style={{flex: 0.25, flexDirection: 'row'}}>
-            </View> */}
-              {/* <View style={{flex: 7, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                <TextInput
-                  style={{textAlign: 'center', width: '92%', fontSize: 24, color: 'white', fontFamily: 'Microsoft Yi Baiti'}}
-                  onChangeText={this.handleEval}
-                  onFocus={this.handleKeyboardShow}
-                  onSubmitEditing={this.sendEval}
-                  placeholder="Enter code to evaluate."
-                  placeholderTextColor="#fff"
-                />
-              </View>
-              <View style={{flex: 1, width: '100%', marginRight: '4%', justifyContent: 'center', alignItems: 'center'}}>
-                <TouchableOpacity onPress={this.sendEval}>
-                  <Ionicons name='ios-checkmark' size={42} color="white" />
-                </TouchableOpacity>
-              </View> */}
-            {/* <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingLeft: 10, paddingRight: 10}}>
-              <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate('FavoritesScreen')}>
-                <View style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', borderRadius: 35, flex: 1, marginLeft: 5, marginRight: 5, justifyContent: 'center', alignContent: 'center'}}>
-                  <Text style={{textAlign: 'center', fontSize: 24, color: 'white', fontFamily: 'Microsoft Yi Baiti'}}>Favorites</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate('SettingsScreen')}>
-                <View style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', borderRadius: 35, flex: 1, marginLeft: 5, marginRight: 5, justifyContent: 'center', alignContent: 'center'}}>
-                  <Text style={{textAlign: 'center', fontSize: 24, color: 'white', fontFamily: 'Microsoft Yi Baiti'}}>Settings</Text>
-                </View>
-              </TouchableOpacity>
-            </View> */}
-          </View>
-          <View style={{position: 'absolute', bottom: 0, left: 0, margin: 20}}>
-            <TouchableOpacity onPress={this.focusCurrentLocation}>
-              <View style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', paddingTop: 10, paddingBottom: 10, paddingLeft: 11, paddingRight: 11, borderRadius: 12}}>
-                <MaterialIcons name='my-location' size={34} color="white" />
-              </View>
-            </TouchableOpacity>
           </View>
           <View style={{position: 'absolute', bottom: 0, right: 0, margin: 20}}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')}>
-              <View style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', paddingTop: 6, paddingBottom: 6, paddingLeft: 10, paddingRight: 10, borderRadius: 12}}>
-                <Ionicons name='ios-settings' size={38} color="white" />
+            <TouchableOpacity onPress={this.focusCurrentLocation}>
+              <View style={{backgroundColor: 'white', paddingTop: 10, paddingBottom: 10, paddingLeft: 11, paddingRight: 11, borderRadius: 12}}>
+                <MaterialIcons name='my-location' size={34} color="#941AB7" />
               </View>
             </TouchableOpacity>
           </View>
         </View> : this.state.alarm ? <View>
           <TouchableOpacity onPress={this.stopAlarm}>
-            <Ionicons name='ios-close' size={64} color="white" />
+            <Ionicons name='ios-close' size={64} color="#941AB7" />
           </TouchableOpacity>
         </View> : <View style={{flex: 1, width: "100%", backgroundColor: 'rgba(0, 0, 0, 0.7)'}}>
           <Text style={{fontSize: 32}}>Loading...</Text>
