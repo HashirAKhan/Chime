@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, PermissionsAndroid, Alert} from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import AddressMap from './app/components/AddressMap';
 import SavedLocations from './app/components/SavedLocations';
@@ -69,6 +69,31 @@ const RootTab = createAppContainer(createBottomTabNavigator(
 
 export default class App extends Component{
   static router = RootTab.router;
+
+  componentDidMount = () => {
+    async function requestLocationPermission() {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            'title': 'Chime app permissions',
+            'message' : 'Chime needs to access your location ' +
+                        'so we can wake you up at your stop.'
+          }
+        );
+
+        if (granted === PermissionsAndroid.RESULTS.GRANTED){
+          alert("loc good");
+        } else {
+          alert("loc bad");
+        }
+      } catch(err) {
+        console.warn(err);
+      }
+    }
+
+    requestLocationPermission();
+  }
 
   render() {
     const { navigation } = this.props;
