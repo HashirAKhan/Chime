@@ -83,16 +83,16 @@ export default class App extends Component{
         );
 
         if (granted === PermissionsAndroid.RESULTS.GRANTED){
-          alert("loc good");
+          alert("Thanks! You may need to restart the app.");
         } else {
-          alert("loc bad");
+          alert("Chime can't work without your locations. Please allow Chime location permissions in Settings.");
         }
       } catch(err) {
         console.warn(err);
       }
     }
 
-    requestLocationPermission();
+    if (Platform.OS === 'android'){requestLocationPermission();}
   }
 
   render() {
