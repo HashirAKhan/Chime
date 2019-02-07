@@ -23,6 +23,7 @@ export default class AddressMap extends React.Component {
       isFavorite: false,
     }
   }
+
   componentDidMount = () => {
     const watchId = navigator.geolocation.watchPosition(pos => {
       this.setState({origin: pos.coords});
@@ -57,6 +58,7 @@ export default class AddressMap extends React.Component {
       }
     });
   }
+
   componentWillUnmount = () => {
     navigator.geolocation.clearWatch(this.state.watchId);
     if (this.state.alarm) {
@@ -68,9 +70,11 @@ export default class AddressMap extends React.Component {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
   }
+
   passMap = (map) => {
     this.map = map;
   }
+
   resetAlarm = (volume) => {
     const name = this.state.currentAlarm ? this.state.currentAlarm.name : 'alarm1';
     const userUploaded = this.state.currentAlarm ? this.state.currentAlarm.userUploaded : false;
@@ -89,6 +93,7 @@ export default class AddressMap extends React.Component {
     });
     this.alarm.setVolume(volume ? volume : 1);
   }
+
   startAlarm = () => {
     this.setState({alarm: true, origin: null, destination: null});
     this.alarm.setVolume(this.alarm.getVolume());
@@ -102,6 +107,7 @@ export default class AddressMap extends React.Component {
     alert("You've reached your destination!");
     this.preformAction();
   }
+
   stopAlarm = () => {
     this.alarm.stop();
     Vibration.cancel();
@@ -115,9 +121,11 @@ export default class AddressMap extends React.Component {
     });
     this.setState({alarm: false});
   }
+
   screenDidFocus = (prop) => {
     this.getSettings();
   }
+
   getSettings = () => {
     AsyncStorage.getItem('settings').then(settings => {
       settings = settings ? JSON.parse(settings) : {};
@@ -125,9 +133,11 @@ export default class AddressMap extends React.Component {
       this.setState({radius: settings.radius ? settings.radius : 0.1});
     });
   }
+
   preformAction = () => {
-    Communications.text('347-858-1839', "Hi, I'm Carl");
+    // Communications.text('347-858-1839', "Hi, I'm Carl");
   }
+
   handleAddressChange = (val) => {
     this.setState({address: val});
     this.geoSearch(val.toLowerCase())
@@ -142,25 +152,19 @@ export default class AddressMap extends React.Component {
         console.log("Error: ", err);
       });
   }
-  // handleEval = (val) => {
-  //   this.setState({eval: val});
-  // }
-  // sendEval = () => {
-  //   console.log("sentEval");
-  //   this.webView.postMessage(JSON.stringify({
-  //     type: 'eval',
-  //     code: this.state.eval
-  //   }));
-  // }
+
   handleKeyboardShow = () => {
     // this.setState({focus: true});
   }
+
   handleKeyboardHide = () => {
     // this.setState({focus: false});
   }
+
   handleRadiusChange = (val) => {
     this.setState({radius: val});
   }
+
   geoSearch = async (query) => {
     let params = {
       address: query,
@@ -174,6 +178,7 @@ export default class AddressMap extends React.Component {
       console.log("Error: ", err);
     }
   }
+
   handleAddressSubmit = () => {
     Keyboard.dismiss();
     // TODO: add delay to geoSearch call.
@@ -187,6 +192,7 @@ export default class AddressMap extends React.Component {
       });
     // TODO: add loading icon while getting res, reuse res currently in state.
   }
+
   saveAddress = () => {
     if (this.state.address) {
       const savedAddresses = this.state.savedAddresses,
@@ -209,6 +215,7 @@ export default class AddressMap extends React.Component {
       }
     }
   }
+
   removeAddress = () => {
     if (this.state.address) {
       const savedAddresses = this.state.savedAddresses,
@@ -231,10 +238,12 @@ export default class AddressMap extends React.Component {
       }
     }
   }
+
   hoistFocus = (ref) => {
     this.focusCurrentLocation = ref;
     this.forceUpdate();
   }
+
   render() {
     console.log("this.state.origin", this.state.origin);
     console.log("this.state.radius", this.state.radius);
@@ -250,13 +259,13 @@ export default class AddressMap extends React.Component {
             <View style={{flex: 1, flexDirection: 'row', backgroundColor: 'white', borderRadius: 35, justifyContent: 'center', alignItems: 'center', paddingLeft: 10, paddingRight: 10}}>
               <View style={{flex: 1, width: '100%', marginLeft: '4%', justifyContent: 'center', alignItems: 'center'}}>
                 <TouchableOpacity onPress={this.state.isFavorite ? this.removeAddress : this.saveAddress} disabled={!this.state.address} style={{backgroundColor: "white"}}>
-                  {this.state.isFavorite ? <Ionicons name='ios-heart' size={32} color="white" /> :
+                  {this.state.isFavorite ? <Ionicons name='ios-heart' size={32} color="#941AB7" /> :
                     <Ionicons name='ios-heart-empty' size={32} color="#941AB7" />}
                 </TouchableOpacity>
               </View>
               <View style={{flex: 7, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                 <TextInput
-                  style={{textAlign: 'center', width: '92%', fontSize: 24, color: 'white', fontFamily: 'Microsoft Yi Baiti', backgroundColor: "white"}}
+                  style={{textAlign: 'center', width: '92%', fontSize: 24, color: '#941AB7', fontFamily: 'Microsoft Yi Baiti', backgroundColor: "white"}}
                   onChangeText={this.handleAddressChange}
                   onFocus={this.handleKeyboardShow}
                   // value={this.state.address}
